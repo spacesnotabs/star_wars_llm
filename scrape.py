@@ -58,11 +58,16 @@ if __name__ == "__main__":
                     soup = BeautifulSoup(html_content, 'html.parser')
                     text = soup.get_text()
 
+                    # Remove blank lines from the text
+                    lines = text.splitlines()
+                    non_empty_lines = [line for line in lines if line.strip()]
+                    cleaned_text = "\n".join(non_empty_lines)
+
                     # The filenames can't contain slashes or quotes, so they are replaced.
                     safe_member_name = member.replace("/", "_").replace('"', '')
 
                     with open(f"characters/{safe_member_name}.txt", "w", encoding="utf-8") as f:
-                        f.write(text)
+                        f.write(cleaned_text)
 
                     print(f"Successfully saved data for {member}")
                 else:
